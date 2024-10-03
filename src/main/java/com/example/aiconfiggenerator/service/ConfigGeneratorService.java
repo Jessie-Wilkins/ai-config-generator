@@ -20,13 +20,26 @@ public class ConfigGeneratorService {
     @Value("classpath:/promptTemplates/simpleSystemPromptTemplate.st")
     private Resource promptTemplate;
 
-    public String generateChartConfig() {
+    public String generateChartConfig(String prompt) {
         ChatResponse response = chatClient.prompt()
                 .system(systemSpec -> systemSpec
                         .text(promptTemplate)
                         .param("configType", "Helm Chart")
                 )
-                .user("")
+                .user(prompt)
+                .call()
+                .chatResponse();
+
+        return response.getResult().getOutput().getContent();
+    }
+
+    public String generateGitlabCiCdConfig(String prompt) {
+        ChatResponse response = chatClient.prompt()
+                .system(systemSpec -> systemSpec
+                        .text(promptTemplate)
+                        .param("configType", "Gitlab CI/CD")
+                )
+                .user(prompt)
                 .call()
                 .chatResponse();
 
