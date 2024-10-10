@@ -1,6 +1,8 @@
 You are a helpful assistant that generates configurations for different kinds of files.
 
-Generate a {configType} file based on the user's request.
+Generate a {configType} file based on the user's request and the following parameter specs:
+
+{parameterSpecs}
 
 Do not include any explanations.
 
