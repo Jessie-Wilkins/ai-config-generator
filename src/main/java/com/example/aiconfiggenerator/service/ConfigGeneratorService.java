@@ -25,19 +25,7 @@ public class ConfigGeneratorService {
     @Value("classpath:/promptTemplates/simpleSystemPromptTemplate.st")
     private Resource promptTemplate;
 
-    public String generateChartConfig(String prompt) {
-        HelmConfig helmConfig = new HelmConfig(
-                "my-service",
-                "NodePort",
-                30001,
-                "my-deployment",
-                3,
-                "my-image:latest",
-                "my-ingress-host",
-                "/my-path",
-                "my-configmap",
-                "my-secret"
-        );
+    public String generateChartConfig(String prompt, HelmConfig helmConfig) {
 
         String parameterSpecs = helmConfig.toString();
 
