@@ -1,5 +1,6 @@
 package com.example.aiconfiggenerator.controller;
 
+import com.example.aiconfiggenerator.model.GitlabCiCdRequest;
 import com.example.aiconfiggenerator.model.HelmRequest;
 import com.example.aiconfiggenerator.service.ConfigGeneratorService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +23,11 @@ public class ConfigGeneratorController {
     }
 
     @PostMapping(path="/generateGitlabCiCd", produces="application/json")
-    public String generateGitlabCiCd(@RequestBody String prompt) {
-        return configGeneratorService.generateGitlabCiCdConfig(prompt);
+    public String generateGitlabCiCd(@RequestBody GitlabCiCdRequest gitlabRequest) {
+        return configGeneratorService
+                .generateGitlabCiCdConfig(
+                        gitlabRequest.prompt(),
+                        gitlabRequest.gitlabCiCdConfig());
     }
 
 }

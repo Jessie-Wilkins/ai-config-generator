@@ -3,6 +3,7 @@ package com.example.aiconfiggenerator.service;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import com.example.aiconfiggenerator.model.GitlabCiCdConfig;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,11 +43,15 @@ public class ConfigGeneratorService {
         return response.getResult().getOutput().getContent();
     }
 
-    public String generateGitlabCiCdConfig(String prompt) {
+    public String generateGitlabCiCdConfig(String prompt,
+                                           GitlabCiCdConfig gitlabCiCdConfig) {
+        String parameterSpecs = gitlabCiCdConfig.toString();
+
         ChatResponse response = chatClient.prompt()
                 .system(systemSpec -> systemSpec
                         .text(promptTemplate)
                         .param("configType", "Gitlab CI/CD")
+                        .param("parameterSpecs", parameterSpecs)
                 )
                 .user(prompt)
                 .call()
